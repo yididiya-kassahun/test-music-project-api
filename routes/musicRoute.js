@@ -1,11 +1,16 @@
 const express = require("express");
-const testController = require("../controllers/musicController");
+const musicController = require("../controllers/musicController");
 const router = express.Router();
 
-router.get("/list", testController.musicList);
-router.put("/update/:musicID", testController.updateMusic);
-router.delete("/remove/:musicID", testController.deleteMusic);
+router.get("/list", musicController.musicList);
+router.put("/update/:musicID", musicController.updateMusic);
+router.delete("/remove/:musicID", musicController.deleteMusic);
 
-router.post("/create", testController.createMusic);
+router.post("/create", musicController.createMusic);
+
+// stat
+
+router.get("/count/music",musicController.countMusic);
+router.get("/count/artist",musicController.countArtist);
 
 module.exports = router;

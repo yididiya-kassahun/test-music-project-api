@@ -12,10 +12,9 @@ const musicSchema = new Schema(
       type: String,
       required: true,
     },
-    album: {
-      type: String,
-      required: true,
-    },
+    album: [
+      { album: String, songs: String },
+    ],
     genre: {
       type: String,
       required: true,

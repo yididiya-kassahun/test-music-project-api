@@ -5,11 +5,12 @@ exports.createMusic = (req, res, next) => {
   const artist = req.body.artist;
   const album = req.body.album;
   const genre = req.body.genre;
+  const songs = req.body.songs;
 
   const music = new Music({
     title: title,
     artist: artist,
-    album: album,
+    album: [{ album: album, songs: songs }],
     genre: genre,
   });
 
@@ -45,11 +46,11 @@ exports.musicList = (req, res, next) => {
 exports.updateMusic = (req, res, next) => {
   const musicID = req.params.musicID;
 
-//   if (!error.isEmpty()) {
-//     const error = new Error("Validation failred");
-//     error.statusCode = 422;
-//     throw error;
-//   }
+  //   if (!error.isEmpty()) {
+  //     const error = new Error("Validation failred");
+  //     error.statusCode = 422;
+  //     throw error;
+  //   }
   const title = req.body.title;
   const artist = req.body.artist;
   const album = req.body.album;
@@ -94,9 +95,51 @@ exports.deleteMusic = (req, res, next) => {
       res.status(200).json({ message: "Deleted music file" });
     })
     .catch((err) => {
-      if(!err.statusCode){
-         err.statusCode = 500;
+      if (!err.statusCode) {
+        err.statusCode = 500;
       }
+      console.log(err);
+    });
+};
+
+// Music statistics
+
+exports.countMusic = (req, res, next) => {
+  Music.countDocuments({})
+    .then((songs) => {
+      res.status(200).json({ message: "Count all song", songs: songs });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+exports.countArtist = (req, res, next) => {
+  Music.countDocuments({ artist: "lofi album" })
+    .then((artist) => {
+      res.status(200).json({ message: "Count artist", artists: artist });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+exports.countAlbum = (req, res, next) => {
+  Music.countDocuments({ nagenme: "sam" })
+    .then((genres) => {
+      res.status(200).json({ message: "Count song genre", genres: genres });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+exports.countGenre = (req, res, next) => {
+  Music.countDocuments({ nagenme: "sam" })
+    .then((genres) => {
+      res.status(200).json({ message: "Count song genre", genres: genres });
+    })
+    .catch((err) => {
       console.log(err);
     });
 };
